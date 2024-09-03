@@ -1,10 +1,19 @@
 import "./App.css";
-import Auth from "./components/Auth";
+import { Routes, Route } from "react-router-dom";
+import UserAuthContextProvider from "./Context";
+// import Auth from "./components/Auth";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
     <>
-      <Auth />
+      <UserAuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </UserAuthContextProvider>
     </>
   );
 }
