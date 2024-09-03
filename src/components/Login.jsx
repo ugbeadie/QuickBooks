@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { userAuthContext } from "../Context";
+import { useState } from "react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const { login, googleLogin } = useContext(userAuthContext);
 
   const navigate = useNavigate();
 
@@ -15,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
-      await login(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
     } catch (err) {
       setError(err.message);
@@ -24,7 +23,7 @@ const Login = () => {
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await googleLogin();
+      await signInWithPopup(auth, googleProvider);
       navigate("/home");
     } catch (err) {
       setError(err.message);
