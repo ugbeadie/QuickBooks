@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { userAuthContext } from "../Context";
 
@@ -9,12 +9,14 @@ const SignUp = () => {
 
   const { signUp } = useContext(userAuthContext);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signUp(email, password);
-      <Navigate to="/" />;
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -37,7 +39,7 @@ const SignUp = () => {
       <div className="w-[30%]">
         SIGN UP
         <form onSubmit={handleSubmit} className="flex flex-col ">
-          {error && <p>{error}</p>}
+          {error && <p className="text-red-600">{error}</p>}
           <input
             type="email"
             placeholder="email"
