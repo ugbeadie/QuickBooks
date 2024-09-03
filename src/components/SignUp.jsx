@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { userAuthContext } from "../Context";
 
@@ -9,14 +9,12 @@ const SignUp = () => {
 
   const { signUp } = useContext(userAuthContext);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signUp(email, password);
-      navigate("/");
+      <Navigate to="/" />;
     } catch (err) {
       setError(err.message);
     }

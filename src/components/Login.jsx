@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { userAuthContext } from "../Context";
 
@@ -9,14 +9,12 @@ const Login = () => {
 
   const { login } = useContext(userAuthContext);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await login(email, password);
-      navigate("/home");
+      <Navigate to="/home" />;
     } catch (err) {
       setError(err.message);
     }
@@ -27,7 +25,6 @@ const Login = () => {
         LOGIN
         <form onSubmit={handleSubmit} className="flex flex-col ">
           {error && <p>{error}</p>}
-
           <input
             type="email"
             placeholder="email"
