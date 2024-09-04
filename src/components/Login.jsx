@@ -7,6 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,11 +15,15 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
+      setError("");
+      setLoading(true);
+
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/home");
     } catch (err) {
       setError(err.message);
     }
+    setLoading(false);
   };
   const signInWithGoogle = async (e) => {
     e.preventDefault();
@@ -47,7 +52,9 @@ const Login = () => {
             className="border rounded"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="border rounded">login</button>
+          <button className="border rounded">
+            {loading ? "Loading..." : "login"}
+          </button>
         </form>
         <hr />
         <button className="border rounded" onClick={signInWithGoogle}>
