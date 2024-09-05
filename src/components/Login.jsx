@@ -40,10 +40,10 @@ const Login = () => {
   };
   return (
     <>
-      <section className="bg-gray-50 flex items-center justify-center h-screen font-sans md:mx-20 md:rounded-2xl">
+      <section className="bg-gray-50 flex items-center justify-center h-screen font-sans md:rounded-2xl">
         <div className="w-full px-4 sm:w-3/4 md:w-1/2 md:px-8">
           <div className="flex justify-between md:flex-col-reverse md:items-start lg:flex-row ">
-            <p className="font-semibold text-[#002D74] text-xl underline mt-[10px] sm:mt-[35px] md:mt-[25px] lg:mt-[40px] sm:text-2xl ">
+            <p className="font-semibold text-[#002D74] text-base underline mt-[13px] sm:mt-[35px] md:mt-[25px] lg:mt-[40px] sm:text-2xl ">
               Login
             </p>
             <div className="italic flex flex-col items-end mb-6 leading-[3px] md:items-start lg:items-end">
@@ -111,20 +111,20 @@ const Login = () => {
             Sign in with Google
           </button>
 
-          <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
-            {/* <a href="#">Forgot your password?</a> */}
+          <div className="mt-5 text-sm sm:text-base border-b border-[#002D74] py-4 text-[#002D74]">
+            <a href="#">Forgot your password?</a>
           </div>
 
-          <div className="mt-3 text-sm flex justify-between items-center text-[#002D74]">
+          <div className="mt-3 text-sm sm:text-base flex justify-between items-center text-[#002D74]">
             <p>Don't have an account?</p>
             <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
-              <Link to="/signup">sign up</Link>
+              <Link to="/signup">Register</Link>
             </button>
           </div>
         </div>
 
         <div className="hidden w-1/2 md:block ">
-          <img className="rounded-2xl h-screen w-full" src={image} />
+          <img className="h-screen w-full" src={image} />
         </div>
       </section>
     </>
