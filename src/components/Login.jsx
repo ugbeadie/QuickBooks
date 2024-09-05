@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
+import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,71 +40,79 @@ const Login = () => {
   };
   return (
     <>
-      <section className="w-full mx-auto flex flex-col gap-10 text-center font-serif">
-        <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">QuickBooks</h1>
-          <p className="w-3/4 mx-auto text-gray-500">
+      <section className="bg-gray-50 flex items-center justify-center h-screen font-serif md:mx-20 md:rounded-2xl">
+        <div className="w-full sm:w-3/4 md:w-1/2 px-4 md:px-12">
+          <h2 className="font-bold text-2xl text-[#002D74]">QuickBooks</h2>
+          <p className="text-xs mt-4 text-[#002D74]">
             Managing your finances made easier.
           </p>
-        </div>
-        <form className="flex flex-col gap-5">
-          <div className="flex border rounded-xl relative">
+
+          <form action="" className="flex flex-col gap-4">
             <input
-              className="w-full py-2 px-5 border rounded-xl bg-slate-50 focus:outline-none border:none"
+              className="p-2 mt-8 rounded-xl border focus:outline-none"
               type="email"
               name="email"
               placeholder="Email"
             />
-          </div>
-          <div className="flex border rounded-md relative">
-            <input
-              className="w-full py-2 px-5 border rounded-xl bg-slate-50 focus:outline-none border:none"
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-            />
-            <span
-              className="icon flex items-center px-4 absolute top-[10px] right-0 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <IoEyeOutline
-                  size={25}
-                  className="text-[#2d3e53] hover:text-[#6366f1]"
-                />
-              ) : (
-                <IoEyeOffOutline
-                  size={25}
-                  className="text-[#2d3e53] hover:text-[#6366f1]"
-                />
-              )}
-            </span>
-          </div>
-          <div className="input-btn">
-            <button
-              className="w-full py-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded text-gray-50 text-lg "
-              type="submit"
-            >
+            <div className="relative">
+              <input
+                className="p-2 rounded-xl border w-full focus:outline-none"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
+              >
+                {showPassword ? (
+                  <IoEyeOutline
+                    size={20}
+                    className="text-[#2d3e53] hover:text-[#6366f1]"
+                  />
+                ) : (
+                  <IoEyeOffOutline
+                    size={20}
+                    className="text-[#2d3e53] hover:text-[#002D74]"
+                  />
+                )}
+              </span>
+            </div>
+            <button className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300">
               Login
             </button>
-            <div>
-              <button className="w-full border py-3 mt-5 flex justify-center items-center gap-2 hover:bg-gray-200">
-                Sign in with Google <FcGoogle size={20} />
-              </button>
-            </div>
+          </form>
+
+          <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
+            <hr className="border-gray-400" />
+            <p className="text-center text-sm">OR</p>
+            <hr className="border-gray-400" />
           </div>
-        </form>
-        <p className="text-center text-gray-400">
-          Don't have an account?{" "}
-          <Link className="text-blue-700" to="/signup">
-            sign up
-          </Link>
-        </p>
+
+          <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+            <FcGoogle className="mr-3" size={20} />
+            Sign in with Google
+          </button>
+
+          <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
+            {/* <a href="#">Forgot your password?</a> */}
+          </div>
+
+          <div className="mt-3 text-xs flex justify-between items-center text-[#002D74]">
+            <p>Don't have an account?</p>
+            <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
+              <Link to="/signup">sign up</Link>
+            </button>
+          </div>
+        </div>
+
+        <div className="md:block hidden w-1/2 ">
+          <img className="rounded-2xl h-screen w-full" src={image} />
+        </div>
       </section>
     </>
   );
 };
-
 export default Login;
 
 {
