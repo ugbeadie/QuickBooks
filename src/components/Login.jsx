@@ -39,31 +39,31 @@ const Login = () => {
   };
   return (
     <>
-      <section className="w-[50%] mx-auto flex flex-col gap-10 text-center">
+      <section className="w-full mx-auto flex flex-col gap-10 text-center font-serif">
         <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">Login</h1>
-          <p className="w-3/4 mx-auto text-gray-400">
-            Lorem ipsum dolor sit amet.
+          <h1 className="text-gray-800 text-4xl font-bold py-4">QuickBooks</h1>
+          <p className="w-3/4 mx-auto text-gray-500">
+            Managing your finances made easier.
           </p>
         </div>
         <form className="flex flex-col gap-5">
           <div className="flex border rounded-xl relative">
             <input
-              className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border:none"
+              className="w-full py-2 px-5 border rounded-xl bg-slate-50 focus:outline-none border:none"
               type="email"
               name="email"
               placeholder="Email"
             />
           </div>
-          <div className="flex border rounded-xl relative">
+          <div className="flex border rounded-md relative">
             <input
-              className="w-full py-4 px-6 border rounded-xl bg-slate-50 focus:outline-none border:none"
+              className="w-full py-2 px-5 border rounded-xl bg-slate-50 focus:outline-none border:none"
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
             />
             <span
-              className="icon flex items-center px-4 absolute top-[17px] right-[5px] cursor-pointer"
+              className="icon flex items-center px-4 absolute top-[10px] right-0 cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -81,14 +81,14 @@ const Login = () => {
           </div>
           <div className="input-btn">
             <button
-              className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded py-3 text-gray-50 text-lg "
+              className="w-full py-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded text-gray-50 text-lg "
               type="submit"
             >
               Login
             </button>
             <div>
-              <button className="w-full border py-3 flex justify-center items-center gap-2 hover:bg-gray-200">
-                Sign in with Google <FcGoogle size={25} />
+              <button className="w-full border py-3 mt-5 flex justify-center items-center gap-2 hover:bg-gray-200">
+                Sign in with Google <FcGoogle size={20} />
               </button>
             </div>
           </div>
