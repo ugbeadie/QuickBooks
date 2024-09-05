@@ -40,19 +40,29 @@ const Login = () => {
   };
   return (
     <>
-      <section className="bg-gray-50 flex items-center justify-center h-screen font-serif md:mx-20 md:rounded-2xl">
-        <div className="w-full sm:w-3/4 md:w-1/2 px-4 md:px-12">
-          <h2 className="font-bold text-2xl text-[#002D74]">QuickBooks</h2>
-          <p className="text-xs mt-4 text-[#002D74]">
-            Managing your finances made easier.
-          </p>
+      <section className="bg-gray-50 flex items-center justify-center h-screen font-sans md:mx-20 md:rounded-2xl">
+        <div className="w-full px-4 sm:w-3/4 md:w-1/2 md:px-12">
+          <div className="flex justify-between md:flex-col-reverse md:items-start lg:flex-row ">
+            <p className="font-semibold text-[#002D74] text-xl underline mt-[10px] sm:mt-[35px] md:mt-[25px] lg:mt-[40px] sm:text-2xl ">
+              Login
+            </p>
+            <div className="italic flex flex-col items-end mb-6 leading-[3px] md:items-start lg:items-end">
+              <h2 className="font-serif font-bold text-[#002D74] text-x sm:text-3xl ">
+                QUICKBOOKS
+              </h2>
+              <p className="text-xs mt-4 text-[#002D74]">
+                Managing your finances made easier.
+              </p>
+            </div>
+          </div>
 
-          <form action="" className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               className="p-2 mt-8 rounded-xl border focus:outline-none"
               type="email"
               name="email"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="relative">
               <input
@@ -60,7 +70,9 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
+
               <span
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
@@ -68,7 +80,7 @@ const Login = () => {
                 {showPassword ? (
                   <IoEyeOutline
                     size={20}
-                    className="text-[#2d3e53] hover:text-[#6366f1]"
+                    className="text-[#2d3e53] hover:text-[#002D74]"
                   />
                 ) : (
                   <IoEyeOffOutline
@@ -78,8 +90,10 @@ const Login = () => {
                 )}
               </span>
             </div>
+            {error && <p className="text-red-600">{error}</p>}
+
             <button className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300">
-              Login
+              {loading ? "Loading..." : "Login"}
             </button>
           </form>
 
@@ -89,7 +103,10 @@ const Login = () => {
             <hr className="border-gray-400" />
           </div>
 
-          <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+          <button
+            onClick={signInWithGoogle}
+            className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
+          >
             <FcGoogle className="mr-3" size={20} />
             Sign in with Google
           </button>
@@ -98,7 +115,7 @@ const Login = () => {
             {/* <a href="#">Forgot your password?</a> */}
           </div>
 
-          <div className="mt-3 text-xs flex justify-between items-center text-[#002D74]">
+          <div className="mt-3 text-sm flex justify-between items-center text-[#002D74]">
             <p>Don't have an account?</p>
             <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
               <Link to="/signup">sign up</Link>
@@ -106,7 +123,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="md:block hidden w-1/2 ">
+        <div className="hidden w-1/2 md:block ">
           <img className="rounded-2xl h-screen w-full" src={image} />
         </div>
       </section>
