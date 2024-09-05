@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <>
       <section className="bg-gray-50 flex items-center justify-center h-screen font-sans md:mx-20 md:rounded-2xl">
-        <div className="w-full px-4 sm:w-3/4 md:w-1/2 md:px-12">
+        <div className="w-full px-4 sm:w-3/4 md:w-1/2 md:px-8">
           <div className="flex justify-between md:flex-col-reverse md:items-start lg:flex-row ">
             <p className="font-semibold text-[#002D74] text-xl underline mt-[10px] sm:mt-[35px] md:mt-[25px] lg:mt-[40px] sm:text-2xl ">
               Login
