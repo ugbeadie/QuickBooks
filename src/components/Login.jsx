@@ -21,11 +21,17 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/home");
+      navigate("/menu");
     } catch (err) {
-      setError(err.message);
+      if (err.message == "Firebase: Error (auth/invalid-credential).") {
+        setError("The email address or password is incorrect.");
+      } else if (
+        err.message ==
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ) {
+        setError("The password should contain at least 6 characters.");
+      }
     }
     setLoading(false);
   };
@@ -33,7 +39,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/home");
+      navigate("/menu");
     } catch (err) {
       setError(err.message);
     }
@@ -117,9 +123,11 @@ const Login = () => {
 
           <div className="mt-3 text-sm sm:text-base flex justify-between items-center text-[#002D74]">
             <p>Don't have an account?</p>
-            <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
-              <Link to="/signup">Register</Link>
-            </button>
+            <Link to="/signup">
+              <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
+                Register
+              </button>
+            </Link>
           </div>
         </div>
 

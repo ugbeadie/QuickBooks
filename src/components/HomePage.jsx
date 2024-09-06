@@ -1,22 +1,33 @@
-import React, { useContext } from "react";
-import { userAuthContext } from "../Context";
-import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
-  const { user } = useContext(userAuthContext);
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
-  };
   return (
-    <div>
-      <h1>Welcome {user && user.email}</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <section className="h-screen max-w-full flex bg-gradient-to-r from-blue-300 to-blue-100">
+      <div className="p-2 flex flex-col justify-center sm:m-5">
+        <h1 className="text-4xl font-sans mb-8 sm:text-6xl lg:w-[80%] lg:text-7xl">
+          Managing your finances made easier with{" "}
+          <span className="text-[#002D74] italic font-semibold font-serif">
+            QuickBooks.
+          </span>
+        </h1>
+        <div>
+          <p className="text-lg mb-3 italic font-sans sm:text-xl">
+            Are you ready to level up financially?
+          </p>
+          <Link to="/login">
+            <button className="bg-[#002D74] rounded-xl px-8 py-3 text-sm text-gray-50 hover:scale-105 duration-300 lg:text-base">
+              Get Started
+            </button>
+          </Link>
+        </div>
+      </div>
+      {/* <div className="hidden md:block">
+        <img
+          src="https://plus.unsplash.com/premium_vector-1718401354708-94a9190cbe17?q=80&w=1508&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+        />
+      </div> */}
+    </section>
   );
 };
 

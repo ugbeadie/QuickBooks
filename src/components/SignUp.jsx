@@ -20,10 +20,23 @@ const SignUp = () => {
       setError("");
       setLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
-      setError(err.message);
+      if (err.message == "Firebase: Error (auth/email-already-in-use).") {
+        setError("The email address is already in use");
+        // alert();
+      } else if (err.message == "Firebase: Error (auth/invalid-email).") {
+        setError("The email address is not valid.");
+      } else if (err.message == "Firebase: Error (auth/invalid-credential).") {
+        setError("User does not exist.");
+      } else if (
+        err.message ==
+        "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ) {
+        setError("The password should contain at least 6 characters.");
+      }
     }
+
     setLoading(false);
   };
 
@@ -90,9 +103,11 @@ const SignUp = () => {
 
           <div className="mt-3 text-sm flex justify-between items-center text-[#002D74]">
             <p>Already have an account?</p>
-            <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
-              <Link to="/">Login</Link>
-            </button>
+            <Link to="/login">
+              <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -105,15 +120,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-// catch (err) {
-//   if (err.message == "Firebase: Error (auth/email-already-in-use).") {
-//     setError("The email address is already in use");
-//     // alert();
-//   } else if (err.message == "Firebase: Error (auth/invalid-email).") {
-//     setError("The email address is not valid.");
-//   } else if (err.message == "Firebase: Error (auth/invalid-credential).") {
-//     setError("The email address or password is incorrect.");
-//   } else if (err.message == "Firebase: Password should be at least 6 characters (auth/weak-password).") {
-//     setError("The password should contain at least 6 characters.");
-//   }
-// }
