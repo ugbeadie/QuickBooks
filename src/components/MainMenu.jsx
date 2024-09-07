@@ -13,10 +13,39 @@ const HomePage = () => {
     }
   };
   return (
-    <div>
-      <h1>Welcome {user && user.email}</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <div>
+        <h1>Welcome {user && user.email}</h1>
+        <button onClick={handleLogout}>Logout</button>
+        <div>
+          <h3>balance</h3>
+          <h3>$0.00</h3>
+        </div>
+        <div>
+          <div className="income">
+            <h3>income</h3>
+            <h3>$0.00</h3>
+          </div>
+          <div className="expenses">
+            <h3>expenses</h3>
+            <h3>$0.00</h3>
+          </div>
+        </div>
+        <form className="add-transaction">
+          <input type="text" placeholder="description" required />
+          <input type="number" placeholder="amount" required />
+          <input type="radio" id="expense" value="expense" required />
+          <label htmlFor="expense">expense</label>
+          <input type="radio" id="income" value="income" required />
+          <label htmlFor="income">income</label>
+          <button type="submit">add</button>
+        </form>
+      </div>
+
+      <div className="transactions">
+        <h3></h3>
+      </div>
+    </>
   );
 };
 

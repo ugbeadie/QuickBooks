@@ -21,7 +21,14 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      let result = await signInWithEmailAndPassword(auth, email, password);
+      const authInfo = {
+        id: result.user.uid,
+        name: result.user.name,
+        pic: result.user.photoURL,
+        isAuth: true,
+      };
+      localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
     } catch (err) {
       if (err.message == "Firebase: Error (auth/invalid-credential).") {
@@ -38,7 +45,14 @@ const Login = () => {
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, googleProvider);
+      let result = await signInWithPopup(auth, googleProvider);
+      const authInfo = {
+        id: result.user.uid,
+        name: result.user.name,
+        pic: result.user.photoURL,
+        isAuth: true,
+      };
+      localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
     } catch (err) {
       setError(err.message);
