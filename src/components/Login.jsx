@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
+import { useGetUserInfo } from "../hooks/useGetUserInfo";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
@@ -13,6 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const { isAuth } = useGetUserInfo();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -50,7 +52,6 @@ const Login = () => {
         userId: result.user.uid,
         name: result.user.name,
         pic: result.user.photoURL,
-        isAuth: true,
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");

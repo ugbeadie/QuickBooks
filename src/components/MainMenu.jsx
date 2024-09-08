@@ -7,11 +7,12 @@ import { useGetTransaction } from "../hooks/useGetTransactions";
 
 const HomePage = () => {
   const [description, setDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState(0);
+  const [transactionAmount, setTransactionAmount] = useState("");
   const [transactionType, setTransactionType] = useState("expense");
 
   const { addTransaction } = useAddTransaction();
-  const { transactions } = useGetTransaction();
+  const { transactions, transactionValues } = useGetTransaction();
+  const { balance, income, expenses } = transactionValues;
   const { user } = useContext(userAuthContext);
 
   const handleLogout = async () => {
@@ -29,6 +30,8 @@ const HomePage = () => {
       transactionAmount,
       transactionType,
     });
+    setDescription("");
+    setTransactionAmount("");
   };
 
   return (
@@ -38,28 +41,30 @@ const HomePage = () => {
         <button onClick={handleLogout}>Logout</button>
         <div>
           <h3>balance</h3>
-          <h3>$0.00</h3>
+          {balance >= 0 ? <h3>${balance}</h3> : <h3>-${balance * -1}</h3>}
         </div>
         <div>
           <div className="income">
             <h3>income</h3>
-            <h3>$0.00</h3>
+            <h3>${income}</h3>
           </div>
           <div className="expenses">
             <h3>expenses</h3>
-            <h3>$0.00</h3>
+            <h3>${expenses}</h3>
           </div>
         </div>
         <form onSubmit={handleSubmit} className="add-transaction">
           <input
             type="text"
             placeholder="description"
+            value={description}
             required
             onChange={(e) => setDescription(e.target.value)}
           />
           <input
             type="number"
             placeholder="amount"
+            value={transactionAmount}
             required
             onChange={(e) => setTransactionAmount(e.target.value)}
           />
