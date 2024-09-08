@@ -23,9 +23,9 @@ const Login = () => {
       setLoading(true);
       let result = await signInWithEmailAndPassword(auth, email, password);
       const authInfo = {
-        id: result.user.uid,
+        userId: result.user.uid,
         name: result.user.name,
-        pic: result.user.photoURL,
+        picture: result.user.photoURL,
         isAuth: true,
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
@@ -47,7 +47,7 @@ const Login = () => {
     try {
       let result = await signInWithPopup(auth, googleProvider);
       const authInfo = {
-        id: result.user.uid,
+        userId: result.user.uid,
         name: result.user.name,
         pic: result.user.photoURL,
         isAuth: true,

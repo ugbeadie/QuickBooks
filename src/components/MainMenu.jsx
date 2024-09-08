@@ -2,9 +2,12 @@ import React, { useContext } from "react";
 import { userAuthContext } from "../Context";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { useAddTransaction } from "../hooks/useAddTransaction";
 
 const HomePage = () => {
+  const { addTransaction } = useAddTransaction();
   const { user } = useContext(userAuthContext);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -12,6 +15,16 @@ const HomePage = () => {
       console.error(err);
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    addTransaction({
+      description: "haircut",
+      transactionAmount: 45,
+      transactionType: "income",
+    });
+  };
+
   return (
     <>
       <div>
@@ -31,12 +44,18 @@ const HomePage = () => {
             <h3>$0.00</h3>
           </div>
         </div>
-        <form className="add-transaction">
+        <form onSubmit={handleSubmit} className="add-transaction">
           <input type="text" placeholder="description" required />
           <input type="number" placeholder="amount" required />
-          <input type="radio" id="expense" value="expense" required />
+          <input
+            type="radio"
+            id="expense"
+            name="name"
+            value="expense"
+            required
+          />
           <label htmlFor="expense">expense</label>
-          <input type="radio" id="income" value="income" required />
+          <input type="radio" id="income" name="name" value="income" required />
           <label htmlFor="income">income</label>
           <button type="submit">add</button>
         </form>
