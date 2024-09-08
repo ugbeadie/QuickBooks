@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+// import { useGetUserInfo } from "../hooks/useGetUserInfo";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isAuth } = useGetUserInfo();
+  // const { isAuth } = useGetUserInfo();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,14 +23,14 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-      let result = await signInWithEmailAndPassword(auth, email, password);
-      const authInfo = {
-        userId: result.user.uid,
-        name: result.user.name,
-        picture: result.user.photoURL,
-        isAuth: true,
-      };
-      localStorage.setItem("auth", JSON.stringify(authInfo));
+      await signInWithEmailAndPassword(auth, email, password);
+      // const authInfo = {
+      //   userId: result.user.uid,
+      //   name: result.user.name,
+      //   picture: result.user.photoURL,
+      //   isAuth: true,
+      // };
+      // localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
     } catch (err) {
       if (err.message == "Firebase: Error (auth/invalid-credential).") {
@@ -47,18 +47,21 @@ const Login = () => {
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      let result = await signInWithPopup(auth, googleProvider);
-      const authInfo = {
-        userId: result.user.uid,
-        name: result.user.name,
-        pic: result.user.photoURL,
-      };
-      localStorage.setItem("auth", JSON.stringify(authInfo));
+      await signInWithPopup(auth, googleProvider);
+      // const authInfo = {
+      //   userId: result.user.uid,
+      //   name: result.user.name,
+      //   picture: result.user.photoURL,
+      // };
+      // localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
     } catch (err) {
       setError(err.message);
     }
   };
+  // if (isAuth) {
+  //   return <Navigate to="/menu" />;
+  // }
   return (
     <>
       <section className="bg-gray-50 flex items-center justify-center h-screen font-sans md:rounded-2xl">
@@ -154,35 +157,3 @@ const Login = () => {
   );
 };
 export default Login;
-
-{
-  /* <div className="w-[30%]">
-        LOGIN
-        <form onSubmit={handleSubmit} className="flex flex-col ">
-          {error && <p className="text-red-600">{error}</p>}
-          <input
-            type="email"
-            placeholder="email"
-            className="border rounded"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            className="border rounded"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="border rounded">
-            {loading ? "Loading..." : "login"}
-          </button>
-        </form>
-        <hr />
-        <button className="border rounded" onClick={signInWithGoogle}>
-          sign in with google
-        </button>
-        <div>
-          {" "}
-          dont have an account? <Link to="/signup">sign up</Link>
-        </div>
-      </div> */
-}

@@ -2,17 +2,17 @@ import { useContext, useState } from "react";
 import { userAuthContext } from "../Context";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { useAddTransaction } from "../hooks/useAddTransaction";
-import { useGetTransaction } from "../hooks/useGetTransactions";
+// import { useAddTransaction } from "../hooks/useAddTransaction";
+// import { useGetTransaction } from "../hooks/useGetTransactions";
 
 const HomePage = () => {
-  const [description, setDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState("");
-  const [transactionType, setTransactionType] = useState("expense");
+  // const [description, setDescription] = useState("");
+  // const [transactionAmount, setTransactionAmount] = useState("");
+  // const [transactionType, setTransactionType] = useState("expense");
 
-  const { addTransaction } = useAddTransaction();
-  const { transactions, transactionValues } = useGetTransaction();
-  const { balance, income, expenses } = transactionValues;
+  // const { addTransaction } = useAddTransaction();
+  // const { transactions, transactionValues } = useGetTransaction();
+  // const { balance, income, expenses } = transactionValues;
   const { user } = useContext(userAuthContext);
 
   const handleLogout = async () => {
@@ -23,22 +23,23 @@ const HomePage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    addTransaction({
-      description,
-      transactionAmount,
-      transactionType,
-    });
-    setDescription("");
-    setTransactionAmount("");
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   addTransaction({
+  //     description,
+  //     transactionAmount,
+  //     transactionType,
+  //   });
+  //   setDescription("");
+  //   setTransactionAmount("");
+  // };
 
   return (
     <>
-      <div>
-        <h1>Welcome {user && user.email}</h1>
-        <button onClick={handleLogout}>Logout</button>
+      <h1>Welcome {user && user.email}</h1>
+      <button onClick={handleLogout}>Logout</button>
+      {/* <div>
+        
         <div>
           <h3>balance</h3>
           {balance >= 0 ? <h3>${balance}</h3> : <h3>-${balance * -1}</h3>}
@@ -111,7 +112,7 @@ const HomePage = () => {
             );
           })}
         </ul>
-      </div>
+      </div> */}
     </>
   );
 };
