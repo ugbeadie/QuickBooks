@@ -1,6 +1,6 @@
 export const useGetUserInfo = () => {
-  const { name, email, picture, userId, isAuth } =
+  const { name, email, picture, userId, userIsAuthenticated } =
     JSON.parse(localStorage.getItem("auth")) || {};
 
-  return { name, email, picture, userId, isAuth };
+  return { name, email, picture, userId, userIsAuthenticated };
 };

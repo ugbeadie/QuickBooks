@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isAuth } = useGetUserInfo();
+  const { userIsAuthenticated } = useGetUserInfo();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,7 +29,7 @@ const Login = () => {
         name: result.user.displayName,
         email: result.user.email,
         picture: result.user.photoURL,
-        isAuth: true,
+        userIsAuthenticated: true,
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
@@ -54,7 +54,7 @@ const Login = () => {
         name: result.user.displayName,
         email: result.user.email,
         picture: result.user.photoURL,
-        isAuth: true,
+        userIsAuthenticated: true,
       };
       localStorage.setItem("auth", JSON.stringify(authInfo));
       navigate("/menu");
@@ -62,7 +62,7 @@ const Login = () => {
       setError(err.message);
     }
   };
-  if (isAuth) {
+  if (userIsAuthenticated) {
     return <Navigate to="/menu" />;
   }
   return (

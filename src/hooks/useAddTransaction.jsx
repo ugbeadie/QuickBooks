@@ -4,7 +4,7 @@ import { useGetUserInfo } from "./useGetUserInfo";
 
 export const useAddTransaction = () => {
   const transactionCollectionRef = collection(db, "transactions");
-  const { userId } = useGetUserInfo();
+  const { userId, email } = useGetUserInfo();
   const addTransaction = async ({
     description,
     transactionAmount,
@@ -12,6 +12,7 @@ export const useAddTransaction = () => {
   }) => {
     await addDoc(transactionCollectionRef, {
       userId,
+      email,
       description,
       transactionAmount,
       transactionType,

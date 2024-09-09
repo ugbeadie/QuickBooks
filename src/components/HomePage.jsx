@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useGetUserInfo } from "../hooks/useGetUserInfo";
 
 const HomePage = () => {
-  const { isAuth, email } = useGetUserInfo();
+  const { userIsAuthenticated, email } = useGetUserInfo();
 
   return (
     <section className="h-screen max-w-full flex bg-gradient-to-r from-blue-300 to-blue-100">
@@ -13,7 +13,7 @@ const HomePage = () => {
             QuickBooks.
           </span>
         </h1>
-        {isAuth ? (
+        {userIsAuthenticated ? (
           <div>
             <p className="text-lg mb-3 italic font-sans sm:text-xl">
               Already logged in as {email}
