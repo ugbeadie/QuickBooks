@@ -1,45 +1,50 @@
-import { useContext, useState } from "react";
-import { userAuthContext } from "../Context";
+import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
-// import { useAddTransaction } from "../hooks/useAddTransaction";
-// import { useGetTransaction } from "../hooks/useGetTransactions";
+import { useAddTransaction } from "../hooks/useAddTransaction";
+import { useGetTransactions } from "../hooks/useGetTransactions";
+import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { useNavigate } from "react-router-dom";
 
-const HomePage = () => {
-  // const [description, setDescription] = useState("");
-  // const [transactionAmount, setTransactionAmount] = useState("");
-  // const [transactionType, setTransactionType] = useState("expense");
+const MainMenu = () => {
+  const [description, setDescription] = useState("");
+  const [transactionAmount, setTransactionAmount] = useState("");
+  const [transactionType, setTransactionType] = useState("expense");
 
-  // const { addTransaction } = useAddTransaction();
-  // const { transactions, transactionValues } = useGetTransaction();
-  // const { balance, income, expenses } = transactionValues;
-  const { user } = useContext(userAuthContext);
+  const { addTransaction } = useAddTransaction();
+  const { transactions, transactionValues } = useGetTransactions();
+  const { name, email, picture } = useGetUserInfo();
+  const { balance, income, expenses } = transactionValues;
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      localStorage.clear();
+      navigate("/login");
     } catch (err) {
       console.error(err);
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   addTransaction({
-  //     description,
-  //     transactionAmount,
-  //     transactionType,
-  //   });
-  //   setDescription("");
-  //   setTransactionAmount("");
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    addTransaction({
+      description,
+      transactionAmount,
+      transactionType,
+    });
+    setDescription("");
+    setTransactionAmount("");
+  };
 
   return (
     <>
-      <h1>Welcome {user && user.email}</h1>
+      {name && <h1>Welcome {name}</h1>}
+      <p>signed in as {email}</p>
+      {picture && <img src={picture} alt="display photo" />}
       <button onClick={handleLogout}>Logout</button>
-      {/* <div>
-        
+      <div>
         <div>
           <h3>balance</h3>
           {balance >= 0 ? <h3>${balance}</h3> : <h3>-${balance * -1}</h3>}
@@ -112,9 +117,8 @@ const HomePage = () => {
             );
           })}
         </ul>
-      </div> */}
+      </div>
     </>
   );
 };
-
-export default HomePage;
+export default MainMenu;
