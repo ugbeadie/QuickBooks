@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useGetUserInfo } from "../hooks/useGetUserInfo";
 
 const HomePage = () => {
+  const { isAuth, email } = useGetUserInfo();
+
   return (
     <section className="h-screen max-w-full flex bg-gradient-to-r from-blue-300 to-blue-100">
       <div className="p-2 flex flex-col justify-center sm:m-5">
@@ -10,16 +13,29 @@ const HomePage = () => {
             QuickBooks.
           </span>
         </h1>
-        <div>
-          <p className="text-lg mb-3 italic font-sans sm:text-xl">
-            Are you ready to level up financially?
-          </p>
-          <Link to="/login">
-            <button className="bg-[#002D74] rounded-xl px-8 py-3 text-sm text-gray-50 hover:scale-105 duration-300 lg:text-base">
-              Get Started
-            </button>
-          </Link>
-        </div>
+        {isAuth ? (
+          <div>
+            <p className="text-lg mb-3 italic font-sans sm:text-xl">
+              Already logged in as {email}
+            </p>
+            <Link to="/login">
+              <button className="bg-[#002D74] rounded-xl px-8 py-3 text-sm text-gray-50 hover:scale-105 duration-300 lg:text-base">
+                Continue
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <p className="text-lg mb-3 italic font-sans sm:text-xl">
+              Are you ready to level up financially?
+            </p>
+            <Link to="/login">
+              <button className="bg-[#002D74] rounded-xl px-8 py-3 text-sm text-gray-50 hover:scale-105 duration-300 lg:text-base">
+                Get Started
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
       {/* <div className="hidden md:block">
         <img
