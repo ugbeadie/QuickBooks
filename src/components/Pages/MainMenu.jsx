@@ -1,23 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { useAddTransaction } from "../../hooks/useAddTransaction";
 import { useGetTransactions } from "../../hooks/useGetTransactions";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import { useNavigate } from "react-router-dom";
 import Transactions from "../Transactions";
 import { SearchTransactions } from "../SearchTransactions";
 import { FilterButtons } from "../FilterButtons";
+import { AddTransactionModal } from "../Modals/AddTransactionModal";
+import { IoIosAddCircle } from "react-icons/io";
+import { TransactionInputs } from "../TransactionInputs";
+import { userAuthContext } from "../../Context";
 
 const MainMenu = () => {
-  const [description, setDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState("");
-  const [transactionType, setTransactionType] = useState("expense");
-
-  const { addTransaction } = useAddTransaction();
   const { transactions, transactionValues } = useGetTransactions();
   const { name, email, picture } = useGetUserInfo();
   const { balance, income, expenses } = transactionValues;
+  const { showModal, setShowModal } = useContext(userAuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -30,23 +29,28 @@ const MainMenu = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    addTransaction({
-      description,
-      transactionAmount,
-      transactionType,
-    });
-    setDescription("");
-    setTransactionAmount("");
-  };
-
   return (
     <>
       {name && <h1>Welcome {name}</h1>}
       <p>signed in as {email}</p>
       {picture && <img src={picture} alt="display photo" />}
       <SearchTransactions />
+
+      {/* ACCESS MODAL START*/}
+      <button
+        onClick={() => setShowModal(true)}
+        className="border bg-slate-600 text-gray-50 p-2"
+      >
+        <IoIosAddCircle size={25} />
+      </button>
+      <AddTransactionModal
+        showModal={showModal}
+        onClose={() => setShowModal(false)}
+      >
+        <TransactionInputs />
+      </AddTransactionModal>
+      {/* ACCESS MODAL END */}
+
       <button onClick={handleLogout}>Logout</button>
       <div>
         <div>
@@ -63,39 +67,6 @@ const MainMenu = () => {
             <h3>${expenses}</h3>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="add-transaction">
-          <input
-            type="text"
-            placeholder="description"
-            value={description}
-            required
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="amount"
-            value={transactionAmount}
-            required
-            onChange={(e) => setTransactionAmount(e.target.value)}
-          />
-          <input
-            type="radio"
-            id="expense"
-            value="expense"
-            checked={transactionType === "expense"}
-            onChange={(e) => setTransactionType(e.target.value)}
-          />
-          <label htmlFor="expense">expense</label>
-          <input
-            type="radio"
-            id="income"
-            value="income"
-            checked={transactionType === "income"}
-            onChange={(e) => setTransactionType(e.target.value)}
-          />
-          <label htmlFor="income">income</label>
-          <button type="submit">add</button>
-        </form>
       </div>
 
       <div className="transactions">
