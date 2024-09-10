@@ -4,8 +4,10 @@ import { auth } from "../config/firebase";
 import { useAddTransaction } from "../hooks/useAddTransaction";
 import { useGetTransactions } from "../hooks/useGetTransactions";
 import { useGetUserInfo } from "../hooks/useGetUserInfo";
-import { useDeleteTransaction } from "../hooks/useDeleteTransaction";
 import { useNavigate } from "react-router-dom";
+import Transactions from "./Transactions";
+import { SearchTransactions } from "./SearchTransactions";
+import { FilterButtons } from "./FilterButtons";
 
 const MainMenu = () => {
   const [description, setDescription] = useState("");
@@ -14,8 +16,7 @@ const MainMenu = () => {
 
   const { addTransaction } = useAddTransaction();
   const { transactions, transactionValues } = useGetTransactions();
-  const { name, email, picture, userId } = useGetUserInfo();
-  const { deleteTransaction } = useDeleteTransaction();
+  const { name, email, picture } = useGetUserInfo();
   const { balance, income, expenses } = transactionValues;
   const navigate = useNavigate();
 
@@ -40,15 +41,12 @@ const MainMenu = () => {
     setTransactionAmount("");
   };
 
-  const handleDelete = async (id) => {
-    await deleteTransaction(id);
-  };
-
   return (
     <>
       {name && <h1>Welcome {name}</h1>}
       <p>signed in as {email}</p>
       {picture && <img src={picture} alt="display photo" />}
+      <SearchTransactions />
       <button onClick={handleLogout}>Logout</button>
       <div>
         <div>
@@ -102,35 +100,15 @@ const MainMenu = () => {
 
       <div className="transactions">
         <h3>transactions</h3>
-        {transactions?.map((transaction) => {
-          const { description, transactionAmount, transactionType } =
-            transaction;
-          return (
-            <div className="flex">
-              <ul>
-                <li>
-                  <h4>{description}</h4>
-                  <p>
-                    {transactionAmount} |{" "}
-                    <label
-                      style={{
-                        color: transactionType === "income" ? "green" : "red",
-                      }}
-                    >
-                      {transactionType}
-                    </label>
-                  </p>
-                </li>
-              </ul>
-              <button
-                onClick={() => handleDelete(transaction.id)}
-                type="submit"
-              >
-                delete
-              </button>
-            </div>
-          );
-        })}
+        <FilterButtons />
+        {transactions.length > 0 ? (
+          <Transactions transactions={transactions} />
+        ) : (
+          <div>
+            <p>You don't have any transactions</p>
+            <button>Add</button>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,10 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase";
+import { useGetTransactions } from "../hooks/useGetTransactions";
+
 export const userAuthContext = createContext();
 
 const Context = ({ children }) => {
   const [user, setUser] = useState({});
+  const [query, setQuery] = useState("");
+  const [items, setItems] = useState(products);
+  const { transactions, transactionValues } = useGetTransactions();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -15,47 +20,10 @@ const Context = ({ children }) => {
     };
   }, []);
   return (
-    <userAuthContext.Provider value={{ user }}>
+    <userAuthContext.Provider value={{ user, query, setQuery }}>
       {children}
     </userAuthContext.Provider>
   );
 };
 
 export default Context;
-
-// import { createContext, useContext, useEffect, useState } from "react";
-// import {
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   signOut,
-//   onAuthStateChanged,
-// } from "firebase/auth";
-// import { auth } from "./config/firebase";
-// const userAuthContext = createContext();
-
-// export const UserAuthContextProvider = ({ children }) => {
-//   const [user, setUser] = useState("");
-//   const signUp = (email, password) => {
-//     return createUserWithEmailAndPassword(auth, email, password);
-//   };
-//   const login = (email, password) => {
-//     return signInWithEmailAndPassword(auth, email, password);
-//   };
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-//       setUser(currentUser);
-//     });
-//     return () => {
-//       unsubscribe();
-//     };
-//   }, []);
-//   return (
-//     <userAuthContext.Provider value={{ user, signUp, login }}>
-//       {children}
-//     </userAuthContext.Provider>
-//   );
-// };
-
-// export const useUserAuth = () => {
-//   return useContext(userAuthContext);
-// };
