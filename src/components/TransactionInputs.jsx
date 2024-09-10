@@ -7,7 +7,7 @@ export const TransactionInputs = () => {
   const [transactionAmount, setTransactionAmount] = useState("");
   const [transactionType, setTransactionType] = useState("expense");
 
-  const { setShowModal } = useContext(userAuthContext);
+  const { setShowAddtransactionModal } = useContext(userAuthContext);
   const { addTransaction } = useAddTransaction();
 
   const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ export const TransactionInputs = () => {
     });
     setDescription("");
     setTransactionAmount("");
-    setShowModal(false);
+    setShowAddtransactionModal(false);
   };
 
   return (
@@ -55,7 +55,7 @@ export const TransactionInputs = () => {
       />
       <label htmlFor="income">income</label>
       <div>
-        <button onClick={() => setShowModal(false)} type="submit">
+        <button onClick={() => setShowAddtransactionModal(false)}>
           cancel
         </button>
         <button type="submit">add</button>
