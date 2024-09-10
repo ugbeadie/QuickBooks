@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase";
-import { useAddTransaction } from "../hooks/useAddTransaction";
-import { useGetTransactions } from "../hooks/useGetTransactions";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { auth } from "../../config/firebase";
+import { useAddTransaction } from "../../hooks/useAddTransaction";
+import { useGetTransactions } from "../../hooks/useGetTransactions";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import { useNavigate } from "react-router-dom";
-import Transactions from "./Transactions";
-import { SearchTransactions } from "./SearchTransactions";
-import { FilterButtons } from "./FilterButtons";
+import Transactions from "../Transactions";
+import { SearchTransactions } from "../SearchTransactions";
+import { FilterButtons } from "../FilterButtons";
 
 const MainMenu = () => {
   const [description, setDescription] = useState("");

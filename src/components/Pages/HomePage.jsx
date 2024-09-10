@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 
 const HomePage = () => {
   const { userIsAuthenticated, email } = useGetUserInfo();

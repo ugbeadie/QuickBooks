@@ -1,11 +1,11 @@
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../config/firebase";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { auth, googleProvider } from "../../config/firebase";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
-import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
+// import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -153,7 +153,7 @@ const Login = () => {
         </div>
 
         <div className="hidden w-1/2 md:block ">
-          <img className="h-screen w-full" src={image} />
+          {/* <img className="h-screen w-full" src={image} /> */}
         </div>
       </section>
     </>

@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth } from "../../config/firebase";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
+// import image from "../assets/jakub-zerdzicki-ykgLX_CwtDw-unsplash.jpg";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -112,7 +112,7 @@ const SignUp = () => {
         </div>
 
         <div className="md:block hidden w-1/2 ">
-          <img className=" h-screen w-full" src={image} />
+          {/* <img className=" h-screen w-full" src={image} /> */}
         </div>
       </section>
     </>
