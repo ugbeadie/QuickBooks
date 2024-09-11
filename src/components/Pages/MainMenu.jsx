@@ -11,8 +11,8 @@ import { AddTransactionModal } from "../Modals/AddTransactionModal";
 import { IoIosAddCircle } from "react-icons/io";
 import { TransactionInputs } from "../TransactionInputs";
 import { userAuthContext } from "../../Context";
-
-import { useDeleteAllTransactions } from "../../hooks/useDeleteAllTransactions";
+import { useClearAllTransactions } from "../../hooks/useClearAllTransactions";
+import { ClearAllTransactionsModal } from "../Modals/ClearAllTransactionsModal";
 
 const MainMenu = () => {
   const { transactions, transactionValues } = useGetTransactions();
@@ -21,10 +21,12 @@ const MainMenu = () => {
   const {
     showAddTransactionModal,
     setShowAddTransactionModal,
+    showClearAllTransactionsModal,
+    setShowClearAllTransactionsModal,
     loading,
     setLoading,
   } = useContext(userAuthContext);
-  const { deleteAllTransactions } = useDeleteAllTransactions();
+  const { clearAllTransactions } = useClearAllTransactions();
 
   const navigate = useNavigate();
 
@@ -41,10 +43,11 @@ const MainMenu = () => {
   const handleDeleteAll = async () => {
     try {
       setLoading(true);
-      await deleteAllTransactions();
+      await clearAllTransactions();
     } catch (err) {
       console.error(err);
     }
+    setShowClearAllTransactionsModal(false);
     setLoading(false);
   };
 
@@ -91,15 +94,42 @@ const MainMenu = () => {
       <div className="transactions">
         <h3>transactions</h3>
         <button
+          onClick={() => setShowClearAllTransactionsModal(true)}
+          className="border bg-slate-600 text-gray-50 p-2"
+        >
+          clear
+        </button>
+        <ClearAllTransactionsModal
+          showClearAllTransactionsModal={showClearAllTransactionsModal}
+          onClose={() => setShowClearAllTransactionsModal(false)}
+        >
+          <div>
+            <h1>Clear All Transactions</h1>
+            <p>
+              Are you sure you want to clear all transactions, this action can't
+              be undone
+            </p>
+          </div>
+          <div>
+            <button onClick={() => setShowClearAllTransactionsModal(false)}>
+              cancel
+            </button>
+            <button onClick={handleDeleteAll}>
+              {loading ? "clearing" : "clear"}
+            </button>
+          </div>
+        </ClearAllTransactionsModal>
+        {/* <button
           onClick={handleDeleteAll}
           className={
             transactions.length > 0
               ? "border text-green-500"
               : "border text-red-500"
           }
+          disabled={transactions.length < 1}
         >
           {loading ? "clearing" : "clear"}
-        </button>
+        </button> */}
         {/* <FilterButtons /> */}
         {transactions.length > 0 ? (
           <Transactions transactions={transactions} />

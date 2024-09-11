@@ -12,6 +12,8 @@ const Context = ({ children }) => {
   const [showAddTransactionModal, setShowAddTransactionModal] = useState(false);
   const [showDeleteTransactionModal, setShowDeleteTransactionModal] =
     useState(false);
+  const [showClearAllTransactionsModal, setShowClearAllTransactionsModal] =
+    useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -33,6 +35,8 @@ const Context = ({ children }) => {
         setShowAddTransactionModal,
         showDeleteTransactionModal,
         setShowDeleteTransactionModal,
+        showClearAllTransactionsModal,
+        setShowClearAllTransactionsModal,
       }}
     >
       {children}

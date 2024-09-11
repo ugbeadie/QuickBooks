@@ -9,10 +9,10 @@ import {
 } from "firebase/firestore";
 import { useGetUserInfo } from "./useGetUserInfo";
 
-export const useDeleteAllTransactions = () => {
+export const useClearAllTransactions = () => {
   const { userId } = useGetUserInfo();
 
-  const deleteAllTransactions = async () => {
+  const clearAllTransactions = async () => {
     const transactionCollectionRef = collection(db, "transactions");
     const queryTransaction = query(
       transactionCollectionRef,
@@ -26,5 +26,5 @@ export const useDeleteAllTransactions = () => {
       await deleteDoc(docRef);
     });
   };
-  return { deleteAllTransactions };
+  return { clearAllTransactions };
 };
