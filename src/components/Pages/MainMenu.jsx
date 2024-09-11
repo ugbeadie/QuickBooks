@@ -16,7 +16,7 @@ const MainMenu = () => {
   const { transactions, transactionValues } = useGetTransactions();
   const { name, email, picture } = useGetUserInfo();
   const { balance, income, expenses } = transactionValues;
-  const { showAddtransactionModal, setShowAddtransactionModal } =
+  const { showAddTransactionModal, setShowAddTransactionModal } =
     useContext(userAuthContext);
   const navigate = useNavigate();
 
@@ -39,14 +39,14 @@ const MainMenu = () => {
 
       {/* ACCESS MODAL START*/}
       <button
-        onClick={() => setShowAddtransactionModal(true)}
+        onClick={() => setShowAddTransactionModal(true)}
         className="border bg-slate-600 text-gray-50 p-2"
       >
         <IoIosAddCircle size={25} />
       </button>
       <AddTransactionModal
-        showAddtransactionModal={showAddtransactionModal}
-        onClose={() => setShowAddtransactionModal(false)}
+        showAddTransactionModal={showAddTransactionModal}
+        onClose={() => setShowAddTransactionModal(false)}
       >
         <TransactionInputs />
       </AddTransactionModal>

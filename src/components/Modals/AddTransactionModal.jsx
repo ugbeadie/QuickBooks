@@ -1,18 +1,18 @@
 export const AddTransactionModal = ({
-  showAddtransactionModal,
+  showAddTransactionModal,
   onClose,
   children,
 }) => {
-  if (!showAddtransactionModal) return null;
+  if (!showAddTransactionModal) return null;
   return (
     <div
       className={`fixed inset-0 flex justify-center items-center transition-all duration-700${
-        showAddtransactionModal ? "visible bg-black/20" : "invisible"
+        showAddTransactionModal ? "visible bg-black/20" : "invisible"
       }`}
     >
       <div
         className={`bg-white rounded-xl relative shadow p-6 transition-all${
-          showAddtransactionModal
+          showAddTransactionModal
             ? "scale-100 opacity-100"
             : "scale-125 opacity-0"
         }`}
