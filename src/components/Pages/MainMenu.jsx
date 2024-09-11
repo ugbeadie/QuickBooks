@@ -6,18 +6,23 @@ import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import { useNavigate } from "react-router-dom";
 import Transactions from "../Transactions";
 import { SearchTransactions } from "../SearchTransactions";
-import { FilterButtons } from "../FilterButtons";
+// import { FilterButtons } from "../FilterButtons";
 import { AddTransactionModal } from "../Modals/AddTransactionModal";
 import { IoIosAddCircle } from "react-icons/io";
 import { TransactionInputs } from "../TransactionInputs";
 import { userAuthContext } from "../../Context";
 
+import { useDeleteAllTransactions } from "../../hooks/useDeleteAllTransactions";
+
 const MainMenu = () => {
-  const { transactions, transactionValues } = useGetTransactions();
-  const { name, email, picture } = useGetUserInfo();
+  const { transactions, setTransactions, transactionValues } =
+    useGetTransactions();
+  const { name, email, picture, userId } = useGetUserInfo();
   const { balance, income, expenses } = transactionValues;
   const { showAddTransactionModal, setShowAddTransactionModal } =
     useContext(userAuthContext);
+  const { deleteAllTransactions } = useDeleteAllTransactions();
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -25,6 +30,14 @@ const MainMenu = () => {
       await signOut(auth);
       localStorage.clear();
       navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    try {
+      await deleteAllTransactions();
     } catch (err) {
       console.error(err);
     }
@@ -72,13 +85,21 @@ const MainMenu = () => {
 
       <div className="transactions">
         <h3>transactions</h3>
-        <FilterButtons />
+        <button
+          onClick={handleDeleteAll}
+          className={transactions ? "border green" : " border red"}
+        >
+          clear
+        </button>
+        {/* <FilterButtons /> */}
         {transactions.length > 0 ? (
           <Transactions transactions={transactions} />
         ) : (
           <div>
             <p>You don't have any transactions</p>
-            <button>Add</button>
+            <button onClick={() => setShowAddTransactionModal(true)}>
+              Add
+            </button>
           </div>
         )}
       </div>

@@ -61,7 +61,7 @@ const Transactions = ({ transactions }) => {
               showDeleteTransactionModal={showDeleteTransactionModal}
               onClose={() => setShowDeleteTransactionModal(false)}
             >
-              <div>
+              <div>         
                 <h1>Confirm Delete</h1>
                 <p>
                   Are you sure you want to delete this transaction, this action

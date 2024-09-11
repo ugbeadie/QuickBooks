@@ -35,8 +35,8 @@ export const useGetTransactions = () => {
         let totalExpenses = 0;
 
         snapshot.forEach((doc) => {
-          const data = doc.data();
-          const id = doc.id;
+          let data = doc.data();
+          let id = doc.id;
           docs.push({ ...data, id });
           if (data.transactionType === "income") {
             totalIncome += Number(data.transactionAmount);
@@ -60,5 +60,5 @@ export const useGetTransactions = () => {
   useEffect(() => {
     getTransactions();
   }, []);
-  return { transactions, transactionValues };
+  return { transactions, setTransactions, transactionValues };
 };
