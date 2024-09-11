@@ -95,6 +95,7 @@ const MainMenu = () => {
         <h3>transactions</h3>
         <button
           onClick={() => setShowClearAllTransactionsModal(true)}
+          disabled={transactions.length < 1}
           className="border bg-slate-600 text-gray-50 p-2"
         >
           clear
@@ -114,22 +115,19 @@ const MainMenu = () => {
             <button onClick={() => setShowClearAllTransactionsModal(false)}>
               cancel
             </button>
-            <button onClick={handleDeleteAll}>
+            <button
+              onClick={handleDeleteAll}
+              className={
+                transactions.length > 0
+                  ? "border text-green-500"
+                  : "border text-red-500"
+              }
+            >
               {loading ? "clearing" : "clear"}
             </button>
           </div>
         </ClearAllTransactionsModal>
-        {/* <button
-          onClick={handleDeleteAll}
-          className={
-            transactions.length > 0
-              ? "border text-green-500"
-              : "border text-red-500"
-          }
-          disabled={transactions.length < 1}
-        >
-          {loading ? "clearing" : "clear"}
-        </button> */}
+
         {/* <FilterButtons /> */}
         {transactions.length > 0 ? (
           <Transactions transactions={transactions} />
