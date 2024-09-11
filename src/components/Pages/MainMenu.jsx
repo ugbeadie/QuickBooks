@@ -15,12 +15,15 @@ import { userAuthContext } from "../../Context";
 import { useDeleteAllTransactions } from "../../hooks/useDeleteAllTransactions";
 
 const MainMenu = () => {
-  const { transactions, setTransactions, transactionValues } =
-    useGetTransactions();
-  const { name, email, picture, userId } = useGetUserInfo();
+  const { transactions, transactionValues } = useGetTransactions();
+  const { name, email, picture } = useGetUserInfo();
   const { balance, income, expenses } = transactionValues;
-  const { showAddTransactionModal, setShowAddTransactionModal } =
-    useContext(userAuthContext);
+  const {
+    showAddTransactionModal,
+    setShowAddTransactionModal,
+    loading,
+    setLoading,
+  } = useContext(userAuthContext);
   const { deleteAllTransactions } = useDeleteAllTransactions();
 
   const navigate = useNavigate();
@@ -37,10 +40,12 @@ const MainMenu = () => {
 
   const handleDeleteAll = async () => {
     try {
+      setLoading(true);
       await deleteAllTransactions();
     } catch (err) {
       console.error(err);
     }
+    setLoading(false);
   };
 
   return (
@@ -87,9 +92,13 @@ const MainMenu = () => {
         <h3>transactions</h3>
         <button
           onClick={handleDeleteAll}
-          className={transactions ? "border green" : " border red"}
+          className={
+            transactions.length > 0
+              ? "border text-green-500"
+              : "border text-red-500"
+          }
         >
-          clear
+          {loading ? "clearing" : "clear"}
         </button>
         {/* <FilterButtons /> */}
         {transactions.length > 0 ? (
