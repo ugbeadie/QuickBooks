@@ -7,7 +7,11 @@ export const userAuthContext = createContext();
 const Context = ({ children }) => {
   const [user, setUser] = useState({});
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [showAddTransactionModal, setShowAddTransactionModal] = useState(false);
+  const [showDeleteTransactionModal, setShowDeleteTransactionModal] =
+    useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -23,8 +27,12 @@ const Context = ({ children }) => {
         user,
         query,
         setQuery,
+        loading,
+        setLoading,
         showAddTransactionModal,
         setShowAddTransactionModal,
+        showDeleteTransactionModal,
+        setShowDeleteTransactionModal,
       }}
     >
       {children}

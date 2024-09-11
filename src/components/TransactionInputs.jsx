@@ -7,19 +7,27 @@ export const TransactionInputs = () => {
   const [transactionAmount, setTransactionAmount] = useState("");
   const [transactionType, setTransactionType] = useState("expense");
 
-  const { setShowAddtransactionModal } = useContext(userAuthContext);
+  const { setShowAddTransactionModal, loading, setLoading } =
+    useContext(userAuthContext);
   const { addTransaction } = useAddTransaction();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    addTransaction({
-      description,
-      transactionAmount,
-      transactionType,
-    });
+    try {
+      setLoading(true);
+      await addTransaction({
+        description,
+        transactionAmount,
+        transactionType,
+      });
+    } catch (err) {
+      console.error(err);
+    }
     setDescription("");
     setTransactionAmount("");
-    setShowAddtransactionModal(false);
+    setLoading(false);
+
+    setShowAddTransactionModal(false);
   };
 
   return (
@@ -55,10 +63,10 @@ export const TransactionInputs = () => {
       />
       <label htmlFor="income">income</label>
       <div>
-        <button onClick={() => setShowAddtransactionModal(false)}>
+        <button onClick={() => setShowAddTransactionModal(false)}>
           cancel
         </button>
-        <button type="submit">add</button>
+        <button type="submit">{loading ? "Adding" : "Add"}</button>
       </div>
     </form>
   );
