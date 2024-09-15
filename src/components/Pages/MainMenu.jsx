@@ -1,45 +1,46 @@
-// import { useContext, useState } from "react";
-// import { signOut } from "firebase/auth";
-// import { auth } from "../../config/firebase";
-// import { useGetTransactions } from "../../hooks/useGetTransactions";
+import { useContext, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { useGetTransactions } from "../../hooks/useGetTransactions";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
-// import { useNavigate } from "react-router-dom";
-// import Transactions from "../Transactions";
-// import { SearchTransactions } from "../SearchTransactions";
-// // import { FilterButtons } from "../FilterButtons";
-// import { AddTransactionModal } from "../Modals/AddTransactionModal";
-// import { IoIosAddCircle } from "react-icons/io";
-// import { TransactionInputs } from "../TransactionInputs";
-// import { userAuthContext } from "../../Context";
-// import { useClearAllTransactions } from "../../hooks/useClearAllTransactions";
-// import { ClearAllTransactionsModal } from "../Modals/ClearAllTransactionsModal";
+import { useNavigate } from "react-router-dom";
+import Transactions from "../Transactions";
+import { SearchTransactions } from "../SearchTransactions";
+// import { FilterButtons } from "../FilterButtons";
+import { AddTransactionModal } from "../Modals/AddTransactionModal";
+import { IoIosAddCircle } from "react-icons/io";
+import { TransactionInputs } from "../TransactionInputs";
+import { userAuthContext } from "../../Context";
+import { useClearAllTransactions } from "../../hooks/useClearAllTransactions";
+import { ClearAllTransactionsModal } from "../Modals/ClearAllTransactionsModal";
 import { CiSearch } from "react-icons/ci";
 import { IoAddCircle } from "react-icons/io5";
+import { AiOutlineRise, AiOutlineFall } from "react-icons/ai";
 const MainMenu = () => {
-  // const { transactions, transactionValues } = useGetTransactions();
+  const { transactions, transactionValues } = useGetTransactions();
   const { name, email, picture } = useGetUserInfo();
-  // const { balance, income, expenses } = transactionValues;
-  // const {
-  //   showAddTransactionModal,
-  //   setShowAddTransactionModal,
-  //   showClearAllTransactionsModal,
-  //   setShowClearAllTransactionsModal,
-  //   loading,
-  //   setLoading,
-  // } = useContext(userAuthContext);
-  // const { clearAllTransactions } = useClearAllTransactions();
+  const { balance, income, expenses } = transactionValues;
+  const {
+    showAddTransactionModal,
+    setShowAddTransactionModal,
+    showClearAllTransactionsModal,
+    setShowClearAllTransactionsModal,
+    loading,
+    setLoading,
+  } = useContext(userAuthContext);
+  const { clearAllTransactions } = useClearAllTransactions();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const handleLogout = async () => {
-  //   try {
-  //     await signOut(auth);
-  //     localStorage.clear();
-  //     navigate("/login");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.clear();
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // const handleDeleteAll = async () => {
   //   try {
@@ -55,8 +56,8 @@ const MainMenu = () => {
   return (
     <>
       <main>
-        <div className="font-sans bg-slate-100 h-screen">
-          <nav className="flex justify-between items-center  p-3">
+        <div className="font-sans bg-[#0c4aad] min-h-screen  p-3">
+          <nav className="flex justify-between items-center ">
             <div className="flex">
               {picture && (
                 <img
@@ -66,32 +67,94 @@ const MainMenu = () => {
                 />
               )}
               <div className="ml-2 ">
-                {name && (
+                {name ? (
                   <p className="text-sm text-gray-400 mt-4 leading-[5px]">
                     Welcome <br />
-                    <span className="text-base text-black font-bold">
+                    <span className="text-base text-white font-bold">
                       {" "}
                       {name}
                     </span>
                   </p>
+                ) : (
+                  <p className="text-sm text-gray-400 mt-4 leading-[5px]">
+                    Welcome <br />
+                    <span className="text-base text-white font-bold">
+                      {" "}
+                      {email}
+                    </span>
+                  </p>
                 )}
+                <p className="cursor-pointer text-white" onClick={handleLogout}>
+                  Logout
+                </p>
               </div>
             </div>
-            <h3 className="font-serif font-bold text-[#002D74] text-lg sm:text-3xl ">
+            <h3 className="font-serif font-bold text-white text-lg sm:text-3xl ">
               QUICKBOOKS
             </h3>
           </nav>
 
-          <div>
+          <div className="flex justify-between mt-12">
             <div>
-              <p>Total Balance</p>
-              <h3>$100.00</h3>
+              <p className="text-sm text-gray-400">Total Balance</p>
+              <h3 className="text-3xl text-white font-semibold">${balance}</h3>
             </div>
-            <div>
-              <CiSearch size={30} />
-              <IoAddCircle size={30} />
+            <div className="flex items-center gap-5">
+              <CiSearch size={35} className="cursor-pointer text-white" />
+
+              <IoAddCircle
+                size={35}
+                onClick={() => setShowAddTransactionModal(true)}
+                className="cursor-pointer text-white"
+              />
+              <AddTransactionModal
+                showAddTransactionModal={showAddTransactionModal}
+                onClose={() => setShowAddTransactionModal(false)}
+              >
+                <TransactionInputs />
+              </AddTransactionModal>
             </div>
           </div>
+
+          <div className="w-full flex justify-center gap-4 mt-6 ">
+            <div className="flex items-center gap-3 bg-[#546277] py-3 px-5 rounded-2xl">
+              <AiOutlineRise
+                size={50}
+                className="p-2 bg-green-200 text-green-600 rounded-full"
+              />
+              <div className="leading-[10px]">
+                <p className="text-green-600 font-bold">Income</p>
+                <h3 className="text-2xl text-white font-semibold">${income}</h3>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-[#546277] py-3 px-5 rounded-2xl">
+              <AiOutlineFall
+                size={50}
+                className="p-2 bg-red-200 text-red-600 rounded-full"
+              />
+              <div className="leading-[10px]">
+                <p className="text-red-600 font-bold">Expenses</p>
+                <h3 className="text-2xl text-white font-semibold">
+                  ${expenses}
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          {transactions.length > 0 ? (
+            <div>
+              <div className="grid-rows-2">
+                <Transactions transactions={transactions} />
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center mt-8 text-white text-xl h-[50%]">
+              <p>You don't have any transactions</p>
+              <button onClick={() => setShowAddTransactionModal(true)}>
+                Click<span> here </span>to add
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </>
@@ -111,12 +174,12 @@ export default MainMenu;
 //       >
 //         <IoIosAddCircle size={25} />
 //       </button>
-//       <AddTransactionModal
-//         showAddTransactionModal={showAddTransactionModal}
-//         onClose={() => setShowAddTransactionModal(false)}
-//       >
-//         <TransactionInputs />
-//       </AddTransactionModal>
+// <AddTransactionModal
+//   showAddTransactionModal={showAddTransactionModal}
+//   onClose={() => setShowAddTransactionModal(false)}
+// >
+//   <TransactionInputs />
+// </AddTransactionModal>
 //       {/* ACCESS MODAL END */}
 
 //       <button onClick={handleLogout}>Logout</button>
